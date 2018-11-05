@@ -17,8 +17,8 @@ db.execute('''CREATE TABLE tickets
          NAME           TEXT                    NOT NULL,
          AGE            INT                     NOT NULL,
          PHONE          INT                     NOT NULL,
-         EMAIL          EMAIL                   NOT NULL,
-         SEATCLASS      CHAR                    IN("A","B","C","D"),
+         EMAIL          TEXT                    NOT NULL,
+         SEATCLASS      CHAR                    CHECK(SEATCLASS IN("A","B","C","D")),
          SEATNO         INT                     NOT NULL);''')
 
 print ("Table created successfully")
