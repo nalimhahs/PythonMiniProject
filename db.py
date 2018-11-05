@@ -29,7 +29,7 @@ print ("Table created successfully")
 
 def addTicket(gameId, name, age, phone, email, seatClass, seatNo):
     ticketNo = str(gameId) + seatClass + str(seatNo) 
-    cursor.execute('''INSERT INTO tickets(TICKETNO, GAMEID, NAME, AGE, PHONE, EMAIL, SEATCLASS, SEATNO) 
+    cursor.execute('''INSERT INTO tickets (TICKETNO, GAMEID, NAME, AGE, PHONE, EMAIL, SEATCLASS, SEATNO) 
                      VALUES(?,?,?,?,?,?,?,?)''', (ticketNo, gameId, name, age, phone, email, seatClass, seatNo))
     db.commit()
 
@@ -79,6 +79,16 @@ def viewUser(bkNo):
     for row in cursor:
         #parse data later...
         print('{0} : {1}, {2}'.format(row[0], row[1], row[2]))
+
+
+def checkSeat(seatNo, sType, matchID):
+    cursor.execute('''SELECT SEATNO FROM tickets WHERE SEATNO = ? AND SEATCLASS  = ? AND GAMEID = ? ''', (seatNo, sType, matchID))
+    for row in cursor:
+        if row[0] == seatNo:
+            return 1
+        else:
+            return 0
+
 
 ###########################################################################
 #                                                                         #
@@ -175,6 +185,14 @@ def viewGames():
     cursor.execute('''SELECT * FROM gameTable ''', ())
     for row in cursor:
         print('ID: {0}\nName: {1}\nDate: {2}\tTime: {3}'.format(row[0], row[1], row[2],row[3]))
+
+def gameVerify(gameId):
+    cursor.execute('''SELECT GAMEID FROM gameTable WHERE GAMEID = ?''', (gameId))
+    for row in cursor:
+        if row[0] == gameId:
+            return 1
+        else:
+            return 0
 
 
 db.close()
