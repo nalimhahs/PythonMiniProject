@@ -1,21 +1,23 @@
+def manageAdmin():
 
-print(
-    "Welcome To the stadium ticket booking system!\nAdmin Menu\n"
-    "1. Manage Ticketing \n"
-    "2. Manage Games\n"
-    "3. Exit\n"
-)
+    print(
+        "Welcome To the stadium ticket booking system!\nAdmin Menu\n"
+        "1. Manage Ticketing \n"
+        "2. Manage Games\n"
+        "3. Exit\n"
+    )
 
-choice = int(input("Enter your choice: "))
+    choice = int(input("Enter your choice: "))
 
-if choice == 1:
-    manageTickets()
-elif choice == 2:
-    manageGames()
-elif choice == 3:
-    print()
-else:
-    pass
+    if choice == 1:
+        manageTickets()
+    elif choice == 2:
+        manageGames()
+    elif choice == 3:
+        print()
+    else:
+        print('The Choice you entered is invalid!\nPlease Try Again!!\n')
+        manageAdmin()
 
 
 def manageTickets():
@@ -41,7 +43,8 @@ def manageTickets():
     elif choice == 5:
         exit(0)
     else:
-        pass
+        print('The Choice you entered is invalid!\nPlease Try Again!!\n')
+        manageTickets()
 
 
 def manageGames():
@@ -68,4 +71,5 @@ def manageGames():
     elif choice == 5:
         exit(0)
     else:
-        pass
+        print('The Choice you entered is invalid!\nPlease Try Again!!\n')
+        manageGames()

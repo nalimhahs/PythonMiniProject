@@ -32,6 +32,7 @@ def addTicket(gameId, name, age, phone, email, seatClass, seatNo):
     cursor.execute('''INSERT INTO tickets (TICKETNO, GAMEID, NAME, AGE, PHONE, EMAIL, SEATCLASS, SEATNO) 
                      VALUES(?,?,?,?,?,?,?,?)''', (ticketNo, gameId, name, age, phone, email, seatClass, seatNo))
     db.commit()
+    return ticketNo
 
 
 def editTicket(tkNo):

@@ -1,11 +1,8 @@
-from db import *
-
-
-seatTypes = ['A', 'B', 'C', 'D']
-
+from db import addTicket, gameVerify, checkSeat
 
 def getSeatType():
 
+    seatTypes = ['A', 'B', 'C', 'D']
     sType = input(
         'Enter your seat class\n'
         'A - A/C VIP Lounge ------------------------ 200\n'
@@ -15,7 +12,7 @@ def getSeatType():
         'Your Choice: '
     )
     if sType not in seatTypes:
-        print('The Seat Class you entered is invalid!\nPlease Try Again!!')
+        print('The Seat Class you entered is invalid!\nPlease Try Again!!\n')
         getSeatType()
     
     return sType
@@ -25,7 +22,7 @@ def getMatch():
 
     mID = input('Enter match you want to book for: ')
     if gameVerify(mID):
-        print('The match id you entered is invalid!\nPlease Try Again!!')
+        print('The match id you entered is invalid!\nPlease Try Again!!\n')
         getMatch()
 
     return mID
@@ -37,10 +34,10 @@ def getSeat(sType,matchID):
         print('Yaay seat available!')
         return seatNo
     else:
-        print('The seat number you asked for is already booked!!\nTry another seat.')
+        print('The seat number you asked for is already booked!!\nTry another seat.\n')
 
 
-def getData():
+def book():
 
     name = input('Enter your Name: ')
     age = int(input('Enter your age: '))
@@ -49,7 +46,13 @@ def getData():
     sType = getSeatType()
     matchID = getMatch()
     seatNo = getSeat(sType,matchID)
-    addTicket(matchID,name,age,phone,email,sType,seatNo)
+    print('Getting your ticket ready...')
+    ticketNo = addTicket(matchID,name,age,phone,email,sType,seatNo)
+    print(
+        'Done\n'
+        'Here is your ticket number: ' + str(ticketNo) +
+        '\nKeep it safe for further uses.\n'
+    )
     
 
 

@@ -1,20 +1,30 @@
-#from booking import book
+from booking import book
+from user import manageUser
+from admin import manageAdmin
 
-print(
-    "Welcome To the stadium ticket booking system!\n"
-    "1. Book Tickets\n"
-    "2. Manage my bookings\n"
-    "3. Admin Login\n"
-    "4. Exit\n"
-)
+def mainMenu():
 
-choice = int(input("Enter your choice: "))
+    print(
+        "Welcome To the stadium ticket booking system!\n"
+        "1. Book Tickets\n"
+        "2. Manage my bookings\n"
+        "3. Admin Login\n"
+        "4. Exit\n"
+    )
 
-if choice == 1:
-    print()
-elif choice == 2:
-    print()
-elif choice == 3:
-    print()
-elif choice == 4:
-    exit(0)
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        book()
+    elif choice == 2:
+        manageUser()
+    elif choice == 3:
+        manageAdmin()
+    elif choice == 4:
+        exit(0)
+    else:
+        print('The Choice you entered is invalid!\nPlease Try Again!!\n')
+
+
+while True:
+    mainMenu()
