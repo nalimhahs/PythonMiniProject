@@ -11,8 +11,11 @@ def mainMenu():
         "3. Admin Login\n"
         "4. Exit\n"
     )
-
-    choice = int(input("Enter your choice: "))
+    try:
+        choice = int(input("Enter your choice: "))
+    except:
+        print('\n\nThe Choice you entered is invalid!\nPlease Try Again!!\n')
+        mainMenu()        
 
     if choice == 1:
         book()
@@ -21,9 +24,10 @@ def mainMenu():
     elif choice == 3:
         manageAdmin()
     elif choice == 4:
+        print('\n\nBye!\n\n\n')
         exit(0)
     else:
-        print('The Choice you entered is invalid!\nPlease Try Again!!\n')
+        print('\n\nThe Choice you entered is invalid!\nPlease Try Again!!\n')
 
 
 while True:
