@@ -20,7 +20,11 @@ def mainMenu():
     if choice == 1:
         book()
     elif choice == 2:
-        manageUser()
+        bkNo = input('Enter your Booking no: ')
+        if manageUser(bkNo) == 0:
+            mainMenu()
+        else:
+            pass
     elif choice == 3:
         manageAdmin()
     elif choice == 4:

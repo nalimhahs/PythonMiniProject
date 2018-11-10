@@ -1,8 +1,17 @@
-def manageUser():
+from db import User
+
+def manageUser(bkNo):
+
+    user = User()
+
+    if user.verify(bkNo) == 0:
+        print('Invalid Booking Number: ')
+        return 0
+
 
     print(
         "Welcome To the stadium ticket booking system!\nUser Menu\n"
-        "1. View my bookings\n"
+        "1. View my booking\n"
         "2. Cancel ticket\n"
         "3. Edit details\n"
         "4. Back\n"
@@ -10,14 +19,17 @@ def manageUser():
 
     choice = int(input("Enter your choice: "))
 
+
     if choice == 1:
-        print()
+        user.viewUser(bkNo)
     elif choice == 2:
-        print()
+        user.removeTicket(bkNo)
     elif choice == 3:
-        print()
+        user.editTicket(bkNo)
     elif choice == 4:
         return
     else:
         print('The Choice you entered is invalid!\nPlease Try Again!!\n')
-        manageUser()
+        manageUser(bkNo)
+
+    return 1

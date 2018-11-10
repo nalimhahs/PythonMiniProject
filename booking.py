@@ -1,4 +1,4 @@
-from db import addTicket, gameVerify, checkSeat
+from db import User, Game
 
 def getSeatType():
 
@@ -20,17 +20,19 @@ def getSeatType():
 
 def getMatch():
 
-    mID = input('Enter match you want to book for: ')
-    if gameVerify(mID):
+    game = Game()
+    mID = int(input('Enter match you want to book for: '))
+    game.gameVerify(mID)
+    if game.gameVerify(mID):
         print('The match id you entered is invalid!\nPlease Try Again!!\n')
         getMatch()
 
     return mID
 
-def getSeat(sType,matchID):
+def getSeat(user, sType,matchID):
 
-    seatNo = input("Enter your required seat no: ")
-    if checkSeat(seatNo,sType,matchID):
+    seatNo = int(input("Enter your required seat no: "))
+    if user.checkSeat(seatNo,sType,matchID):
         print('Yaay seat available!')
         return seatNo
     else:
@@ -39,15 +41,16 @@ def getSeat(sType,matchID):
 
 def book():
 
+    user = User()
     name = input('Enter your Name: ')
     age = int(input('Enter your age: '))
     email = input('Enter your Email: ')
     phone = input('Enter your Phone: ')
     sType = getSeatType()
     matchID = getMatch()
-    seatNo = getSeat(sType,matchID)
+    seatNo = getSeat(user, sType, matchID)
     print('Getting your ticket ready...')
-    ticketNo = addTicket(matchID,name,age,phone,email,sType,seatNo)
+    ticketNo = user.addTicket(matchID,name,age,phone,email,sType,seatNo)
     print(
         'Done\n'
         'Here is your ticket number: ' + str(ticketNo) +
