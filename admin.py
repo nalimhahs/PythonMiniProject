@@ -76,7 +76,10 @@ def manageGames():
         game.addGame(gameName,date,time)
     elif choice == 3:
         gID = input('Enter game ID to remove: ')
-        game.removeGame(gID)
+        try: 
+            game.removeGame(gID)
+        except:
+            print('\nGame not found!\n')
     elif choice == 4:
         gID = input('Enter game ID to Edit: ')
         game.editGame(gID) 

@@ -21,9 +21,10 @@ def getSeatType():
 def getMatch():
 
     game = Game()
+    print('\nAVAILABLE MATCHES\n')
+    game.viewGames()
     mID = int(input('Enter match you want to book for: '))
-    game.gameVerify(mID)
-    if game.gameVerify(mID):
+    if game.gameVerify(mID) != 1:
         print('The match id you entered is invalid!\nPlease Try Again!!\n')
         getMatch()
 

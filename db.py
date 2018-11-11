@@ -1,39 +1,29 @@
 import sqlite3
 
-"""
-#Create a DB
-db = sqlite3.connect('test.db')  #Create a new database after test case!!
-cursor = db.cursor()
-
-
-#Create a table
-
-print("Opened database successfully")
-
-db.execute('''CREATE TABLE tickets
-         (TICKETNO      TEXT     PRIMARY KEY     NOT NULL,
-         GAMEID         INT     SECONDARY KEY   NOT NULL,
-         NAME           TEXT                    NOT NULL,
-         AGE            INT                     NOT NULL,
-         PHONE          INT                     NOT NULL,
-         EMAIL          TEXT                    NOT NULL,
-         SEATCLASS      CHAR                    CHECK(SEATCLASS IN("A","B","C","D")),
-         SEATNO         INT                     NOT NULL);''')
-
-print ("Table created successfully")
-
-"""
-
 class User:
 
     def __init__(self):
+
         self.db = sqlite3.connect('test.db')  #Create a new database after test case!!
-        self.cursor = self.db.cursor()
+        try:
+            self.db.execute('''CREATE TABLE tickets
+                    (TICKETNO      TEXT     PRIMARY KEY     NOT NULL,
+                    GAMEID         INT     SECONDARY KEY   NOT NULL,
+                    NAME           TEXT                    NOT NULL,
+                    AGE            INT                     NOT NULL,
+                    PHONE          INT                     NOT NULL,
+                    EMAIL          TEXT                    NOT NULL,
+                    SEATCLASS      CHAR                    CHECK(SEATCLASS IN("A","B","C","D")),
+                    SEATNO         INT                     NOT NULL);''')
+        except:
+            pass
+        finally:
+            self.cursor = self.db.cursor()
 
     def addTicket(self, gameId, name, age, phone, email, seatClass, seatNo):
         ticketNo = str(gameId) + seatClass + str(seatNo) 
         self.cursor.execute('''INSERT INTO tickets (TICKETNO, GAMEID, NAME, AGE, PHONE, EMAIL, SEATCLASS, SEATNO) 
-                        VALUES(?,?,?,?,?,?,?,?)''', (ticketNo, gameId, name, age, phone, email, seatClass, seatNo))
+                        VALUES(?,?,?,?,?,?,?,?)''', (ticketNo, gameId, name, age, phone, email, seatClass, seatNo,))
         self.db.commit()
         return ticketNo
 
@@ -78,10 +68,15 @@ class User:
             print('Not deleted!')
             self.db.rollback()
     def viewUser(self, bkNo):
-        self.cursor.execute('''SELECT * FROM tickets WHERE TICKETNO = ?''', (bkNo))
+        self.cursor.execute('''SELECT * FROM tickets WHERE TICKETNO = ?''', (bkNo,))
         for row in self.cursor:
-            #parse data later...
-            print('{0} : {1}, {2}'.format(row[0], row[1], row[2]))
+            print(
+                '\nTicket Number: {0}\nName: {1}\tAge: {2}\nPhone: {3}\nEmail: {4}\nSeat Class: {5}\tSeat Number: {6}'.format(row[0], row[2], row[3], row[4], row[5], row[6], row[7])
+            )
+            print('\nGame Details: \n')
+            game = Game()
+            game.viewGames(row[1])
+
 
 
     def checkSeat(self, seatNo, sType, matchID):
@@ -105,31 +100,42 @@ class User:
 
 
 ###########################################################################
-#                                                                         #
-#                                                                         #
-#                                                                         #
-#                             ADMIN Powers :P                             #
-#                                                                         #
-#                                                                         #
-#                                                                         #
 ###########################################################################
 
 
 class Admin:
 
     def __init__(self):
+        
         self.db = sqlite3.connect('test.db')  #Create a new database after test case!!
-        self.cursor = self.db.cursor()
+        try:
+            self.db.execute('''CREATE TABLE tickets
+                    (TICKETNO      TEXT     PRIMARY KEY     NOT NULL,
+                    GAMEID         INT     SECONDARY KEY   NOT NULL,
+                    NAME           TEXT                    NOT NULL,
+                    AGE            INT                     NOT NULL,
+                    PHONE          INT                     NOT NULL,
+                    EMAIL          TEXT                    NOT NULL,
+                    SEATCLASS      CHAR                    CHECK(SEATCLASS IN("A","B","C","D")),
+                    SEATNO         INT                     NOT NULL);''')
+        except:
+            pass
+        finally:
+            self.cursor = self.db.cursor()
 
 
     def viewAllUsersAdmin(self):
         self.cursor.execute('''SELECT * FROM tickets''')
         for row in self.cursor:
-            #parse data later...
-            print('{0} : {1}, {2}'.format(row[0], row[1], row[2]))
+            print(
+                '\nTicket Number: {0}\nName: {1}\tAge: {2}\nPhone: {3}\nEmail: {4}\nSeat Class: {5}\tSeat Number: {6}'.format(row[0], row[2], row[3], row[4], row[5], row[6], row[7])
+            )
+            print('\nGame Details: \n')
+            game = Game()
+            game.viewGames(row[1])
 
     def removeTicketAdmin(self):
-        bkNo = input('Enter booking no to modify: ')
+        bkNo = input('Enter booking no to Remove: ')
         self.cursor.execute('''DELETE FROM tickets WHERE TICKETNO = ?''', (bkNo))
         if input('Are you sure? (Y/N)') == 'Y':
             self.db.commit()
@@ -157,38 +163,24 @@ class Admin:
 
 
 ####################################################################################
-
-
-#                                    Game Menu
-
-
 ####################################################################################
-
-
-
-"""
-#Create a table
-
-print("Opened database successfully")
-
-db.execute('''CREATE TABLE gameTable
-         (GAMEID       INTEGER      PRIMARY KEY     AUTOINCREMENT,
-         GAMENAME      TEXT                     NOT NULL,
-         DATE          INT                      NOT NULL,
-         TIME          CHAR(50)                 NOT NULL);''')
-
-print ("Table created successfully")
-
-db.close()
-"""
-
 
 
 class Game:
 
     def __init__(self):
+
         self.db = sqlite3.connect('test.db') 
-        self.cursor = self.db.cursor()
+        try:
+            self.db.execute('''CREATE TABLE gameTable
+                (GAMEID       INTEGER      PRIMARY KEY     AUTOINCREMENT,
+                GAMENAME      TEXT                     NOT NULL,
+                DATE          TEXT                      NOT NULL,
+                TIME          CHAR(7)                 NOT NULL);''')
+        except:
+            pass
+        finally:
+            self.cursor = self.db.cursor()
 
     def addGame(self, gameName, date, time):
         self.cursor.execute('''INSERT INTO gameTable(GAMENAME, DATE, TIME) 
@@ -197,6 +189,10 @@ class Game:
 
 
     def editGame(self, gameId):
+        
+        if self.gameVerify(gameId) != 1:
+            print('Invalid Game ID!')
+            return
 
         print(
             "What do want to edit?\n"
@@ -209,11 +205,11 @@ class Game:
         choice = int(input("Enter your choice: "))
 
         if choice == 1:
-            self.cursor.execute('''UPDATE gameTable SET GAMENAME = ? WHERE id = ?''', (input('Enter new Game Name: '),gameId))
+            self.cursor.execute('''UPDATE gameTable SET GAMENAME = ? WHERE GAMEID = ?''', (input('Enter new Game Name: '),gameId))
         elif choice == 2:
-            self.cursor.execute('''UPDATE gameTable SET DATE = ? WHERE id = ?''', (int(input('Enter new Date: ')),gameId)) 
+            self.cursor.execute('''UPDATE gameTable SET DATE = ? WHERE GAMEID = ?''', (int(input('Enter new Date: ')),gameId)) 
         elif choice == 3:
-            self.cursor.execute('''UPDATE gameTable SET TIME = ? WHERE id = ?''', (int(input('Enter new Time: ')),gameId))
+            self.cursor.execute('''UPDATE gameTable SET TIME = ? WHERE GAMEID = ?''', (int(input('Enter new Time: ')),gameId))
         elif choice == 4:
             return
         else:
@@ -227,20 +223,25 @@ class Game:
             self.db.rollback()
 
     def removeGame(self, gameId):
-        self.cursor.execute('''DELETE FROM gameTable WHERE GAMENO = ?''', (gameId))
+        self.cursor.execute('''DELETE FROM gameTable WHERE GAMEID = ?''', (gameId,))
         if input('Are you sure? (Y/N)') == 'Y':
             self.db.commit()
         else:
             print('Not deleted!')
             self.db.rollback()
 
-    def viewGames(self):
-        self.cursor.execute('''SELECT * FROM gameTable ''')
-        for row in self.cursor:
-            print('ID: {0}\nName: {1}\nDate: {2}\tTime: {3}'.format(row[0], row[1], row[2],row[3]))
+    def viewGames(self, ID = 0):
+        if ID != 0:
+            self.cursor.execute('''SELECT * FROM gameTable WHERE GAMEID = ? ''',(ID,))
+            for row in self.cursor:
+                print('Game-ID: {0}\nName: {1}\nDate: {2}\tTime: {3}'.format(row[0], row[1], row[2],row[3]))
+        else:        
+            self.cursor.execute('''SELECT * FROM gameTable ''')
+            for row in self.cursor:
+                print('Game-ID: {0}\nName: {1}\nDate: {2}\tTime: {3}'.format(row[0], row[1], row[2],row[3]))
 
     def gameVerify(self, gameId):
-        self.cursor.execute('''SELECT GAMEID FROM gameTable WHERE GAMEID = ?''', (gameId))
+        self.cursor.execute('''SELECT GAMEID FROM gameTable WHERE GAMEID = ?''', (gameId,))
         for row in self.cursor:
             if row[0] == gameId:
                 return 1
@@ -258,3 +259,11 @@ class Game:
         self.db.close()
 
 
+
+"""
+user = User()
+user.addTicket(2,'Milan',19,989565562,'vghjvhj','A',2)
+"""
+
+user = User()
+user.viewUser('2A2')
