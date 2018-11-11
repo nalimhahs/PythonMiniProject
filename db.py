@@ -259,11 +259,3 @@ class Game:
         self.db.close()
 
 
-
-"""
-user = User()
-user.addTicket(2,'Milan',19,989565562,'vghjvhj','A',2)
-"""
-
-user = User()
-user.viewUser('2A2')
