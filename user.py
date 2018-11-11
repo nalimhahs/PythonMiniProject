@@ -24,12 +24,14 @@ def manageUser(bkNo):
         user.viewUser(bkNo)
     elif choice == 2:
         user.removeTicket(bkNo)
+        print('\nTicket deleted Sucessfully!\n')
+        return 1
     elif choice == 3:
         user.editTicket(bkNo)
     elif choice == 4:
-        return
+        return 1
     else:
         print('The Choice you entered is invalid!\nPlease Try Again!!\n')
         manageUser(bkNo)
 
-    return 1
+    manageUser(bkNo)
