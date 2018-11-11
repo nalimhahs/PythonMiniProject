@@ -61,7 +61,7 @@ class User:
             self.db.rollback()
 
     def removeTicket(self, tkNo):
-        self.cursor.execute('''DELETE FROM tickets WHERE TICKETNO = ?''', (tkNo))
+        self.cursor.execute('''DELETE FROM tickets WHERE TICKETNO = ?''', (tkNo,))
         if input('Are you sure? (Y/N)').upper() == 'Y':
             self.db.commit()
         else:
@@ -136,7 +136,7 @@ class Admin:
 
     def removeTicketAdmin(self):
         bkNo = input('Enter booking no to Remove: ')
-        self.cursor.execute('''DELETE FROM tickets WHERE TICKETNO = ?''', (bkNo))
+        self.cursor.execute('''DELETE FROM tickets WHERE TICKETNO = ?''', (bkNo,))
         if input('Are you sure? (Y/N)') == 'Y':
             self.db.commit()
         else:

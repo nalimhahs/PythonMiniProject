@@ -28,7 +28,7 @@ def mainMenu():
     elif choice == 3:
         manageAdmin()
     elif choice == 4:
-        print('\n\nBye!\n\n\n')
+        print('\n\nBye!\n\n')
         exit(0)
     else:
         print('\n\nThe Choice you entered is invalid!\nPlease Try Again!!\n')
