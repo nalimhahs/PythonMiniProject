@@ -58,7 +58,7 @@ def manageTickets():
         else:
             admin.editTicketAdmin(bkNo)
     elif choice == 4:
-        exit(0)
+        admin.resetAdmin()
     elif choice == 5:
         exit(0)
     else:
