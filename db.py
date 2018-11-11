@@ -54,7 +54,7 @@ class User:
             print('Invalid Choice!')
             self.editTicket(tkNo)
 
-        if input('Are you sure you want to update? (Y/N)').upper() == 'Y':
+        if input('Are you sure you want to update?(Y/N): ').upper() == 'Y':
             self.db.commit()
         else:
             print('Not Updated!')
@@ -62,7 +62,7 @@ class User:
 
     def removeTicket(self, tkNo):
         self.cursor.execute('''DELETE FROM tickets WHERE TICKETNO = ?''', (tkNo,))
-        if input('Are you sure? (Y/N)').upper() == 'Y':
+        if input('Are you sure?(Y/N): ').upper() == 'Y':
             self.db.commit()
         else:
             print('Not deleted!')
@@ -137,7 +137,7 @@ class Admin:
     def removeTicketAdmin(self):
         bkNo = input('Enter booking no to Remove: ')
         self.cursor.execute('''DELETE FROM tickets WHERE TICKETNO = ?''', (bkNo,))
-        if input('Are you sure? (Y/N)') == 'Y':
+        if input('Are you sure?(Y/N): ').upper() == 'Y':
             self.db.commit()
         else:
             print('Not deleted!')
@@ -145,7 +145,7 @@ class Admin:
 
     def editTicketAdmin(self, bkNo):
         self.cursor.execute('''UPDATE tickets SET phone = ? WHERE id = ?''', (0,bkNo))
-        if input('Are you sure? (Y/N)') == 'Y':
+        if input('Are you sure?(Y/N): ').upper() == 'Y':
             self.db.commit()
         else:
             print('Not Updated!')
@@ -153,7 +153,7 @@ class Admin:
 
     def resetAdmin(self):
         self.cursor.execute('''DROP TABLE tickets''')
-        if input('DYWTC?(Y/N): ') == 'Y':
+        if input('Are you sure?(Y/N): ').upper() == 'Y':
             self.db.commit()
         else:
             self.db.rollback()
@@ -216,7 +216,7 @@ class Game:
             print('Invalid Choice!')
             self.editGame(gameId)
 
-        if input('Are you sure you want to update? (Y/N)') == 'Y':
+        if input('Are you sure you want to update? (Y/N)').upper() == 'Y':
             self.db.commit()
         else:
             print('Not Updated!')
@@ -224,7 +224,7 @@ class Game:
 
     def removeGame(self, gameId):
         self.cursor.execute('''DELETE FROM gameTable WHERE GAMEID = ?''', (gameId,))
-        if input('Are you sure? (Y/N)') == 'Y':
+        if input('Are you sure? (Y/N)').upper() == 'Y':
             self.db.commit()
         else:
             print('Not deleted!')
@@ -250,7 +250,7 @@ class Game:
 
     def resetTable(self):
         self.cursor.execute('''DROP TABLE gameTable''')
-        if input('DYWTC?(Y/N): ') == 'Y':
+        if input('Are you sure?(Y/N): ').upper() == 'Y':
             self.db.commit()
         else:
             self.db.rollback()
