@@ -22,6 +22,7 @@ def mainMenu():
     elif choice == 2:
         bkNo = input('Enter your Booking no: ')
         if manageUser(bkNo) == 0:
+            print('\nInvalid Ticket Number!\n')
             mainMenu()
         else:
             pass
