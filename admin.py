@@ -53,7 +53,7 @@ def manageTickets():
 def manageGames():
 
     print(
-        "Welcome To the stadium ticket booking system!\nAdmin Menu\nManage Games\n"
+        "\n\nWelcome To the stadium ticket booking system!\nAdmin Menu\nManage Games\n"
         "1. View all Games\n"
         "2. Add Game\n"
         "3. Remove Game\n"

@@ -5,7 +5,7 @@ from admin import manageAdmin
 def mainMenu():
 
     print(
-        "Welcome To the stadium ticket booking system!\n"
+        "\n\nWelcome To the stadium ticket booking system!\n"
         "1. Book Tickets\n"
         "2. Manage my bookings\n"
         "3. Admin Login\n"

@@ -7,14 +7,14 @@ class User:
         self.db = sqlite3.connect('test.db')  #Create a new database after test case!!
         try:
             self.db.execute('''CREATE TABLE tickets
-                    (TICKETNO      TEXT     PRIMARY KEY     NOT NULL,
-                    GAMEID         INT     SECONDARY KEY   NOT NULL,
-                    NAME           TEXT                    NOT NULL,
-                    AGE            INT                     NOT NULL,
-                    PHONE          INT                     NOT NULL,
-                    EMAIL          TEXT                    NOT NULL,
-                    SEATCLASS      CHAR                    CHECK(SEATCLASS IN("A","B","C","D")),
-                    SEATNO         INT                     NOT NULL);''')
+                    (TICKETNO      TEXT        PRIMARY KEY     NOT NULL,
+                    GAMEID         INTEGER     SECONDARY KEY   NOT NULL,
+                    NAME           TEXT                        NOT NULL,
+                    AGE            INTEGER                     NOT NULL,
+                    PHONE          INTEGER                     NOT NULL,
+                    EMAIL          TEXT                        NOT NULL,
+                    SEATCLASS      CHAR                        CHECK(SEATCLASS IN("A","B","C","D")),
+                    SEATNO         INTEGER                     NOT NULL);''')
         except:
             pass
         finally:
@@ -41,20 +41,20 @@ class User:
         choice = int(input("Enter your choice: "))
 
         if choice == 1:
-            self.cursor.execute('''UPDATE tickets SET NAME = ? WHERE id = ?''', (input('Enter new name: '),tkNo))
+            self.cursor.execute('''UPDATE tickets SET NAME = ? WHERE TICKETNO = ?''', (input('Enter new name: '),tkNo))
         elif choice == 2:
-            self.cursor.execute('''UPDATE tickets SET AGE = ? WHERE id = ?''', (int(input('Enter new Age: ')),tkNo)) 
+            self.cursor.execute('''UPDATE tickets SET AGE = ? WHERE TICKETNO = ?''', (int(input('Enter new Age: ')),tkNo)) 
         elif choice == 3:
-            self.cursor.execute('''UPDATE tickets SET PHONE = ? WHERE id = ?''', (int(input('Enter new Phone: ')),tkNo))
+            self.cursor.execute('''UPDATE tickets SET PHONE = ? WHERE TICKETNO = ?''', (int(input('Enter new Phone: ')),tkNo))
         elif choice == 4:
-            self.cursor.execute('''UPDATE tickets SET EMAIL = ? WHERE id = ?''', (input('Enter new Email: '),tkNo))
+            self.cursor.execute('''UPDATE tickets SET EMAIL = ? WHERE TICKETNO = ?''', (input('Enter new Email: '),tkNo))
         elif choice == 5:
             return
         else:
             print('Invalid Choice!')
             self.editTicket(tkNo)
 
-        if input('Are you sure you want to update? (Y/N)') == 'Y':
+        if input('Are you sure you want to update? (Y/N)').upper() == 'Y':
             self.db.commit()
         else:
             print('Not Updated!')
@@ -62,7 +62,7 @@ class User:
 
     def removeTicket(self, tkNo):
         self.cursor.execute('''DELETE FROM tickets WHERE TICKETNO = ?''', (tkNo))
-        if input('Are you sure? (Y/N)') == 'Y':
+        if input('Are you sure? (Y/N)').upper() == 'Y':
             self.db.commit()
         else:
             print('Not deleted!')
@@ -88,7 +88,7 @@ class User:
                 return 0
 
     def verify(self, ticketNo):
-        self.cursor.execute('''SELECT TICKETNO FROM tickets WHERE TICKETNO = ?''', (ticketNo))
+        self.cursor.execute('''SELECT TICKETNO FROM tickets WHERE TICKETNO = ?''', (ticketNo,))
         for row in self.cursor:
             if row[0] == ticketNo:
                 return 1
@@ -110,14 +110,14 @@ class Admin:
         self.db = sqlite3.connect('test.db')  #Create a new database after test case!!
         try:
             self.db.execute('''CREATE TABLE tickets
-                    (TICKETNO      TEXT     PRIMARY KEY     NOT NULL,
-                    GAMEID         INT     SECONDARY KEY   NOT NULL,
-                    NAME           TEXT                    NOT NULL,
-                    AGE            INT                     NOT NULL,
-                    PHONE          INT                     NOT NULL,
-                    EMAIL          TEXT                    NOT NULL,
-                    SEATCLASS      CHAR                    CHECK(SEATCLASS IN("A","B","C","D")),
-                    SEATNO         INT                     NOT NULL);''')
+                    (TICKETNO      TEXT        PRIMARY KEY     NOT NULL,
+                    GAMEID         INTEGER     SECONDARY KEY   NOT NULL,
+                    NAME           TEXT                        NOT NULL,
+                    AGE            INTEGER                     NOT NULL,
+                    PHONE          INTEGER                     NOT NULL,
+                    EMAIL          TEXT                        NOT NULL,
+                    SEATCLASS      CHAR                        CHECK(SEATCLASS IN("A","B","C","D")),
+                    SEATNO         INTEGER                     NOT NULL);''')
         except:
             pass
         finally:
@@ -174,9 +174,9 @@ class Game:
         try:
             self.db.execute('''CREATE TABLE gameTable
                 (GAMEID       INTEGER      PRIMARY KEY     AUTOINCREMENT,
-                GAMENAME      TEXT                     NOT NULL,
-                DATE          TEXT                      NOT NULL,
-                TIME          CHAR(7)                 NOT NULL);''')
+                GAMENAME      TEXT                         NOT NULL,
+                DATE          TEXT                         NOT NULL,
+                TIME          CHAR(7)                      NOT NULL);''')
         except:
             pass
         finally:

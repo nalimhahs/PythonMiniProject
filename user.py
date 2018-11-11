@@ -10,7 +10,7 @@ def manageUser(bkNo):
 
 
     print(
-        "Welcome To the stadium ticket booking system!\nUser Menu\n"
+        "\n\nWelcome To the stadium ticket booking system!\nUser Menu\n"
         "1. View my booking\n"
         "2. Cancel ticket\n"
         "3. Edit details\n"

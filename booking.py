@@ -33,11 +33,12 @@ def getMatch():
 def getSeat(user, sType,matchID):
 
     seatNo = int(input("Enter your required seat no: "))
-    if user.checkSeat(seatNo,sType,matchID):
+    if user.checkSeat(seatNo,sType,matchID) != 1:
         print('Yaay seat available!')
         return seatNo
     else:
         print('The seat number you asked for is already booked!!\nTry another seat.\n')
+        getSeat(user, sType, matchID)
 
 
 def book():
@@ -50,6 +51,7 @@ def book():
     sType = getSeatType()
     matchID = getMatch()
     seatNo = getSeat(user, sType, matchID)
+    print(seatNo)
     print('Getting your ticket ready...')
     ticketNo = user.addTicket(matchID,name,age,phone,email,sType,seatNo)
     print(
