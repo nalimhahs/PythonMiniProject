@@ -135,17 +135,44 @@ class Admin:
             game.viewGames(row[1])
 
     def removeTicketAdmin(self):
-        bkNo = input('Enter booking no to Remove: ')
-        self.cursor.execute('''DELETE FROM tickets WHERE TICKETNO = ?''', (bkNo,))
-        if input('Are you sure?(Y/N): ').upper() == 'Y':
-            self.db.commit()
-        else:
-            print('Not deleted!')
-            self.db.rollback()
+        try:
+            bkNo = input('Enter booking no to Remove: ')
+            self.cursor.execute('''DELETE FROM tickets WHERE TICKETNO = ?''', (bkNo,))
+            if input('Are you sure?(Y/N): ').upper() == 'Y':
+                self.db.commit()
+            else:
+                print('Not deleted!')
+                self.db.rollback()
+        except:
+            print('\nTicket not found!\n')
 
-    def editTicketAdmin(self, bkNo):
-        self.cursor.execute('''UPDATE tickets SET phone = ? WHERE id = ?''', (0,bkNo))
-        if input('Are you sure?(Y/N): ').upper() == 'Y':
+    def editTicketAdmin(self, tkNo):
+        print(
+            "What do want to edit?\n"
+            "1. Name\n"
+            "2. Age\n"
+            "3. Phone\n"
+            "4. Email\n"
+            "5. Back\n"
+        )
+
+        choice = int(input("Enter your choice: "))
+
+        if choice == 1:
+            self.cursor.execute('''UPDATE tickets SET NAME = ? WHERE TICKETNO = ?''', (input('Enter new name: '),tkNo))
+        elif choice == 2:
+            self.cursor.execute('''UPDATE tickets SET AGE = ? WHERE TICKETNO = ?''', (int(input('Enter new Age: ')),tkNo)) 
+        elif choice == 3:
+            self.cursor.execute('''UPDATE tickets SET PHONE = ? WHERE TICKETNO = ?''', (int(input('Enter new Phone: ')),tkNo))
+        elif choice == 4:
+            self.cursor.execute('''UPDATE tickets SET EMAIL = ? WHERE TICKETNO = ?''', (input('Enter new Email: '),tkNo))
+        elif choice == 5:
+            return
+        else:
+            print('Invalid Choice!')
+            self.editTicketAdmin(tkNo)
+
+        if input('Are you sure you want to update?(Y/N): ').upper() == 'Y':
             self.db.commit()
         else:
             print('Not Updated!')

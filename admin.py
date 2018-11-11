@@ -1,4 +1,4 @@
-from db import Admin, Game
+from db import Admin, Game, User
 
 
 def manageAdmin():
@@ -17,10 +17,11 @@ def manageAdmin():
     elif choice == 2:
         manageGames()
     elif choice == 3:
-        print()
+        return
     else:
         print('The Choice you entered is invalid!\nPlease Try Again!!\n')
         manageAdmin()
+    manageAdmin()
 
 
 def manageTickets():
@@ -35,12 +36,27 @@ def manageTickets():
 
     choice = int(input("Enter your choice: "))
 
+    admin = Admin()
+
     if choice == 1:
-        print()
+        print('\nAll Bookings:\n')
+        admin.viewAllUsersAdmin()
     elif choice == 2:
-        print()
+        bkNo = input('Enter ticket no to edit: ')
+        user = User()
+        if user.verify(bkNo) == 0:
+            print('Invalid Booking Number: ')
+            return 0
+        else:
+            admin.removeTicketAdmin()
     elif choice == 3:
-        print()
+        bkNo = input('Enter ticket no to edit: ')
+        user = User()
+        if user.verify(bkNo) == 0:
+            print('Invalid Booking Number: ')
+            return 0
+        else:
+            admin.editTicketAdmin(bkNo)
     elif choice == 4:
         exit(0)
     elif choice == 5:
@@ -48,6 +64,7 @@ def manageTickets():
     else:
         print('The Choice you entered is invalid!\nPlease Try Again!!\n')
         manageTickets()
+    manageTickets()
 
 
 def manageGames():
@@ -90,3 +107,4 @@ def manageGames():
     else:
         print('The Choice you entered is invalid!\nPlease Try Again!!\n')
         manageGames()
+    manageGames()
